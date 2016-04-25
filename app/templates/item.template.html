@@ -1,0 +1,21 @@
+<div class ="container"  class=" container panel panel-default">
+<div class="media">
+  <div class="media-left">
+    <a href="#">
+      <img class="media-object" src="./assets/images/{{_item.image}}"alt="...">
+    </a>
+  </div>
+  <div class="media-body">
+    <h4 class="media-heading">{{_item.name}}</h4>
+    <div class ="priceperkg">
+       {{_item.priceperunit}}
+    </div>  
+    <div class ="price">
+       {{_item.price}}
+    </div> 
+  </div>
+  <save-list-icon (click) ="saveItem()"> </save-list-icon>
+  <quantity-widget [_quantity] =  "_item.quantity" (add) = "addItem($event)"  (delete) = "deleteItem($event)"> </quantity-widget>
+  
+</div>
+</div>

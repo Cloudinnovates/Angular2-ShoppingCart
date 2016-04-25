@@ -1,0 +1,12 @@
+<table class ="table table-bordered">
+       <thead>
+       <tr>
+           <th [class.disabled] = "_quantity == 0" (click) = "onMinusButtonClick()"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span></th>
+           <th> {{_quantity}} </th>
+           <th (click) = "onAddButtonClick()" class="btn-default">  Add </th>
+         
+       </tr>
+       </thead>
+      
+   </table> 
+    
