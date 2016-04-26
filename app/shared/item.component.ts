@@ -1,7 +1,7 @@
 import {Component, Input,OnInit} from 'angular2/core';
 import {QuantityWidgetComponent} from './quantity.widget.component';
 import {SaveListIconComponent} from './savelisticon.component';
-import {ShoppingService} from './shopping.service';
+import {ShoppingService} from '../services/shopping.service';
 //import {HTTP_PROVIDERS} from 'angular2/http';
 
 @Component({
@@ -13,9 +13,7 @@ import {ShoppingService} from './shopping.service';
             position: relative;
             display: inline-table;
         }
-
         .price {
-            /* display: inline-table; */
             position: relative;
             right: 2%;
             float: right;
@@ -25,7 +23,8 @@ import {ShoppingService} from './shopping.service';
        }
        save-list-icon {
            font-size:15px;
-           float:left;   
+           float:left;  
+           cursor:pointer; 
        }
        
    `],

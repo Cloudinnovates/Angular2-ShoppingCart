@@ -1,6 +1,6 @@
 import {Component,OnInit} from 'angular2/core';
-import {ShoppingService} from './shopping.service';
-import {ItemComponent} from './item.component';
+import {ShoppingService} from './services/shopping.service';
+import {ItemComponent} from './shared/item.component';
 @Component({
     selector :'saved-list',
     templateUrl:'./app/templates/savedList.template.html',

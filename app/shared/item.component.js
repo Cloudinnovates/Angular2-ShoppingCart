@@ -1,4 +1,4 @@
-System.register(['angular2/core', './quantity.widget.component', './savelisticon.component', './shopping.service'], function(exports_1, context_1) {
+System.register(['angular2/core', './quantity.widget.component', './savelisticon.component', '../services/shopping.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -58,7 +58,7 @@ System.register(['angular2/core', './quantity.widget.component', './savelisticon
                     core_1.Component({
                         selector: "item",
                         templateUrl: './app/templates/item.template.html',
-                        styles: ["\n       .priceperkg {\n            left: 0px;\n            position: relative;\n            display: inline-table;\n        }\n\n        .price {\n            /* display: inline-table; */\n            position: relative;\n            right: 2%;\n            float: right;\n        }\n        quantity-widget {\n            float: right;\n       }\n       save-list-icon {\n           font-size:15px;\n           float:left;   \n       }\n       \n   "],
+                        styles: ["\n       .priceperkg {\n            left: 0px;\n            position: relative;\n            display: inline-table;\n        }\n        .price {\n            position: relative;\n            right: 2%;\n            float: right;\n        }\n        quantity-widget {\n            float: right;\n       }\n       save-list-icon {\n           font-size:15px;\n           float:left;  \n           cursor:pointer; \n       }\n       \n   "],
                         directives: [quantity_widget_component_1.QuantityWidgetComponent, savelisticon_component_1.SaveListIconComponent]
                     }), 
                     __metadata('design:paramtypes', [shopping_service_1.ShoppingService])

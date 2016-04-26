@@ -8,13 +8,13 @@
   <div class="media-body">
     <h4 class="media-heading">{{_item.name}}</h4>
     <div class ="priceperkg">
-       {{_item.priceperunit}}
+       {{_item.priceperunit/100 | currency:'GBP':true:'1.2-2'}}/kg
     </div>  
     <div class ="price">
-       {{_item.price}}
+       {{_item.price/100 | currency:'GBP':true:'1.2-2'}}
     </div> 
   </div>
-  <save-list-icon (click) ="saveItem()"> </save-list-icon>
+  <save-list-icon (click) ="saveItem()">  </save-list-icon>
   <quantity-widget [_quantity] =  "_item.quantity" (add) = "addItem($event)"  (delete) = "deleteItem($event)"> </quantity-widget>
   
 </div>

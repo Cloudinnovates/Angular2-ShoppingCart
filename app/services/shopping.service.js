@@ -30,18 +30,19 @@ System.register(['angular2/http', 'angular2/core', 'rxjs/add/operator/map', 'rxj
                 function ShoppingService(_http) {
                     var _this = this;
                     this._http = _http;
-                    this._basketValue = 0;
+                    this._basketTotalItems = 0;
                     this._basketItems = [];
                     this._savedListItems = [];
                     // Create Observable Stream to output our data
                     this.userBasketObservable$ = new Observable_1.Observable(function (observer) { return _this._userBasketObserver = observer; }).share();
+                    this.itemSavedObservable$ = new Observable_1.Observable(function (observer) { return _this._itemSavedObserver = observer; }).share();
                     this._shoppingItems = [
                         {
                             id: 1,
                             name: "Gala Apples",
                             type: "apples",
                             image: "Apples_1.jpg",
-                            priceperunit: "2.50/kg",
+                            priceperunit: 250,
                             price: 260,
                             quantity: 0
                         },
@@ -50,7 +51,7 @@ System.register(['angular2/http', 'angular2/core', 'rxjs/add/operator/map', 'rxj
                             name: "Granny Apples",
                             type: "apples",
                             image: "Apples_2.jpg",
-                            priceperunit: "2.00/kg",
+                            priceperunit: 200,
                             price: 200,
                             quantity: 0
                         },
@@ -59,7 +60,7 @@ System.register(['angular2/http', 'angular2/core', 'rxjs/add/operator/map', 'rxj
                             name: "Rose Apples",
                             type: "apples",
                             image: "Apples_3.jpg",
-                            priceperunit: "3.00/kg",
+                            priceperunit: 300,
                             price: 300,
                             quantity: 0
                         },
@@ -68,7 +69,7 @@ System.register(['angular2/http', 'angular2/core', 'rxjs/add/operator/map', 'rxj
                             name: "Red Grapes",
                             type: "grapes",
                             image: "Grapes_1.jpg",
-                            priceperunit: "3.00/kg",
+                            priceperunit: 300,
                             price: 300,
                             quantity: 0
                         },
@@ -77,7 +78,7 @@ System.register(['angular2/http', 'angular2/core', 'rxjs/add/operator/map', 'rxj
                             name: "Red Grapes",
                             type: "grapes",
                             image: "Grapes_2.jpg",
-                            priceperunit: "3.00/kg",
+                            priceperunit: 300,
                             price: 300,
                             quantity: 0
                         },
@@ -86,7 +87,7 @@ System.register(['angular2/http', 'angular2/core', 'rxjs/add/operator/map', 'rxj
                             name: "Value Banana",
                             type: "bananas",
                             image: "Banana_1.jpg",
-                            priceperunit: "1.00/kg",
+                            priceperunit: 100,
                             price: 100,
                             quantity: 0
                         },
@@ -95,53 +96,57 @@ System.register(['angular2/http', 'angular2/core', 'rxjs/add/operator/map', 'rxj
                             name: "Fair Trade Banana",
                             type: "bananas",
                             image: "Banana_2.jpg",
-                            priceperunit: "1.20/kg",
+                            priceperunit: 120,
                             price: 120,
                             quantity: 0
                         },
                     ];
                 }
                 ShoppingService.prototype.intialise = function () {
-                    // this._http.get(this._url).map(res =>res.json()).subscribe(res =>{ this._userBasketObserver.next(res);});
-                    this._userBasketObserver.next({ guidePrice: this._basketValue, basketItems: this._basketItems, savedListItems: this._savedListItems });
+                    this._userBasketObserver.next({ totalBasketItems: this._basketTotalItems, basketItems: this._basketItems, guidePrice: this.calculateBasketGuidePrice(), savedListItems: this._savedListItems });
                 };
                 ShoppingService.prototype.addItemtoBasket = function (item) {
-                    this._basketValue += 1;
+                    this._basketTotalItems += 1;
                     var itemIndex = this._basketItems.indexOf(item);
-                    if (itemIndex != -1) {
-                        console.log(this._basketItems[itemIndex]);
-                    }
-                    else {
+                    if (itemIndex == -1) {
                         this._basketItems.push(item);
                     }
                     // Push the new list of todos into the Observable stream
-                    this._userBasketObserver.next({ guidePrice: this._basketValue, basketItems: this._basketItems, savedListItems: this._savedListItems });
+                    this._userBasketObserver.next({ totalBasketItems: this._basketTotalItems, guidePrice: this.calculateBasketGuidePrice(), basketItems: this._basketItems, savedListItems: this._savedListItems });
                 };
                 ShoppingService.prototype.deleteItemFromBasket = function (item) {
-                    this._basketValue -= 1;
+                    this._basketTotalItems -= 1;
                     var itemIndex = this._basketItems.indexOf(item);
                     if (this._basketItems[itemIndex].quantity == 0) {
                         this._basketItems.splice(itemIndex, 1);
                     }
                     // Push the new list of todos into the Observable stream
-                    this._userBasketObserver.next({ guidePrice: this._basketValue, basketItems: this._basketItems, savedListItems: this._savedListItems });
+                    this._userBasketObserver.next({ totalBasketItems: this._basketTotalItems, guidePrice: this.calculateBasketGuidePrice(), basketItems: this._basketItems, savedListItems: this._savedListItems });
                 };
                 ShoppingService.prototype.addItemtoSavedList = function (item) {
                     var itemIndex = this._savedListItems.indexOf(item);
-                    if (itemIndex != -1) {
-                        console.log(this._savedListItems[itemIndex]);
-                    }
-                    else {
+                    if (itemIndex == -1) {
                         this._savedListItems.push(item);
-                        console.log("added item to the saved list");
                     }
                     // Push the new list of todos into the Observable stream
-                    this._userBasketObserver.next({ guidePrice: this._basketValue, basketItems: this._basketItems, savedListItems: this._savedListItems });
-                };
-                ShoppingService.prototype.updateShoppingItem = function () {
+                    this._userBasketObserver.next({ totalBasketItems: this._basketTotalItems, guidePrice: this.calculateBasketGuidePrice(), basketItems: this._basketItems, savedListItems: this._savedListItems });
                 };
                 ShoppingService.prototype.getShoppingItemList = function () {
                     return this._shoppingItems;
+                };
+                ShoppingService.prototype.calculateBasketGuidePrice = function () {
+                    var totalValue = 0;
+                    console.log(this._basketItems.length);
+                    for (var _i = 0, _a = this._basketItems; _i < _a.length; _i++) {
+                        var item = _a[_i];
+                        console.log(item);
+                        console.log(item.quantity);
+                        console.log(item.price);
+                        totalValue += item.quantity * item.price;
+                    }
+                    console.log("......................totalValue........................");
+                    console.log(totalValue);
+                    return totalValue;
                 };
                 ShoppingService = __decorate([
                     core_1.Injectable(), 

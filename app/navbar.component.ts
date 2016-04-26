@@ -1,6 +1,6 @@
 import {Component,OnInit} from 'angular2/core';
 import {Router,ROUTER_DIRECTIVES} from 'angular2/router';
-import {ShoppingService} from './shopping.service';
+import {ShoppingService} from './services/shopping.service';
 @Component({
     selector:'navbar',
     templateUrl:'./app/templates/navbar.template.html',
@@ -10,7 +10,7 @@ import {ShoppingService} from './shopping.service';
 
 export class NavbarComponent implements OnInit {
     private _menuList;
-    private _guidePrice;
+    private _totalBasketItems;
     constructor (private _router:Router, private _shoppingService :ShoppingService){
         
     }
@@ -21,7 +21,7 @@ export class NavbarComponent implements OnInit {
         },error	=>	console.log(error),  ()	=>	{console.log("completed..")});
        */
          this._shoppingService.userBasketObservable$.subscribe(resp => {
-             this._guidePrice  = resp.guidePrice;
+             this._totalBasketItems = resp.totalBasketItems ;
             // console.log("response");
             // console.log(resp);
             }

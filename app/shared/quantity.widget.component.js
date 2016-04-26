@@ -52,7 +52,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                     core_1.Component({
                         selector: "quantity-widget",
                         templateUrl: './app/templates/quantitywidget.template.html',
-                        styles: ["\n        .btn-default {\n            color: #ffffff;\n            background-color: green;\n        }\n        .disabled{\n            color:rgba(0,0,0,0.1);\n        }\n    \n    \n    "],
+                        styles: ["\n        .btn-default {\n            color: #ffffff;\n            background-color: green;\n            cursor:pointer;\n        }\n        .btn-minus {\n            cursor:pointer;\n        }\n         .btn-minus.disabled{\n            cursor:default;\n        }\n        .disabled{\n            color:rgba(0,0,0,0.1);\n        }\n    \n    \n    "],
                     }), 
                     __metadata('design:paramtypes', [])
                 ], QuantityWidgetComponent);

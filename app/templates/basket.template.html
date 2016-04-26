@@ -1,5 +1,10 @@
-<h1> Basket </h1>
+
 <div class ="container">
+    
+    <div class ="row">
+       <div class="col-md-6 col-sm-6"><h1> Basket </h1></div>
+       <div class="col-md-6  col-sm-6 text-right"><h3>  Guide Price :{{_guidePrice/100| currency:'GBP':true:'1.2-2'}} </h3></div>
+     </div>   
    <item [_item]=i *ngFor ="#i of _itemsList" >
    </item>     
 </div>

@@ -7,6 +7,13 @@ import {Component,Input,Output,EventEmitter} from 'angular2/core';
         .btn-default {
             color: #ffffff;
             background-color: green;
+            cursor:pointer;
+        }
+        .btn-minus {
+            cursor:pointer;
+        }
+         .btn-minus.disabled{
+            cursor:default;
         }
         .disabled{
             color:rgba(0,0,0,0.1);

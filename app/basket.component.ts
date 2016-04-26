@@ -1,6 +1,6 @@
 import {Component,OnInit} from 'angular2/core';
-import {ShoppingService} from './shopping.service';
-import {ItemComponent} from './item.component';
+import {ShoppingService} from './services/shopping.service';
+import {ItemComponent} from './shared/item.component';
 @Component({
     selector :'basket',
     templateUrl:'./app/templates/basket.template.html',
@@ -8,6 +8,7 @@ import {ItemComponent} from './item.component';
 })
 export class BasketComponent implements OnInit {
     private _itemsList;
+    private _guidePrice;
     
     constructor(private _shoppingService : ShoppingService){
         
@@ -16,8 +17,7 @@ export class BasketComponent implements OnInit {
     ngOnInit(){
          this._shoppingService.userBasketObservable$.subscribe(resp => {
              this._itemsList = resp.basketItems;
-             console.log("response");
-             console.log(this._itemsList);
+             this._guidePrice = resp.guidePrice;
             }
           );
          this._shoppingService.intialise();       
